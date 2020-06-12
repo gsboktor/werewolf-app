@@ -77,7 +77,7 @@ Widget buttons(double width, BuildContext context){
 
 Widget createGame(double width, BuildContext context){
   return Container(
-    margin: EdgeInsets.only(top: 200),
+    margin: EdgeInsets.only(top: MediaQuery.of(context).size.height * .25),
     width: width * .65,
     height: 40,
     decoration: BoxDecoration(
