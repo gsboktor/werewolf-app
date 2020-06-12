@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'createGame.dart';
+
 const _titleStyle = TextStyle(color: Colors. black, fontSize: 28, letterSpacing: 2.0, fontWeight: FontWeight.w600);
 
 void main() => runApp(MyApp());
@@ -33,7 +35,7 @@ class _HomeScreenState extends State<HomeScreen>{
           children: <Widget>[
             logo(),
             title("Werewolf"),
-            buttons(width),
+            buttons(width, context),
           ],
         ),
       )
@@ -63,17 +65,17 @@ Widget title(String title){
   );
 }
 
-Widget buttons(double width){
+Widget buttons(double width, BuildContext context){
   return Column(
     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
     children: <Widget>[
-      createGame(width),
+      createGame(width, context),
       joinGame(width),
     ],
   );
 }
 
-Widget createGame(double width){
+Widget createGame(double width, BuildContext context){
   return Container(
     margin: EdgeInsets.only(top: 200),
     width: width * .65,
@@ -86,7 +88,8 @@ Widget createGame(double width){
     child: FlatButton(
       child: Text('Create Game'),
       onPressed: () => {
-        print('Tap')
+        Navigator.push(context,
+            MaterialPageRoute(builder: (context) => CreateGame()))
       },
     ),
   );

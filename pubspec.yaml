@@ -14,7 +14,7 @@ description: Werewolf in Flutter
 version: 1.0.0+1
 
 environment:
-  sdk: ">=2.1.0 <3.0.0"
+  sdk: ">=2.2.0 <3.0.0"
 
 dependencies:
   flutter:
@@ -37,6 +37,11 @@ flutter:
   assets:
     - asset/wolf.svg
     - asset/wolfpng.png
+    - asset/mason.png
+    - asset/seer.png
+    - asset/tanner.png
+    - asset/villager.png
+    - asset/hunter.png
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in
   # the material Icons class.
