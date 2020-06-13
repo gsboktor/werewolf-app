@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:werewolfapp/SizeConfig.dart';
 
-import 'createGame.dart';
+import 'CreateGame.dart';
+import 'constants.dart';
 
-const _titleStyle = TextStyle(color: Colors. black, fontSize: 28, letterSpacing: 2.0, fontWeight: FontWeight.w600);
+
 
 void main() => runApp(MyApp());
 
@@ -20,6 +22,7 @@ class MyApp extends StatelessWidget {
 
 class HomeScreen extends StatefulWidget{
 
+  @override
   _HomeScreenState createState() => _HomeScreenState();
 }
 
@@ -27,6 +30,7 @@ class _HomeScreenState extends State<HomeScreen>{
 
   Widget build(BuildContext context){
 
+    SizeConfig().init(context);
     final width = MediaQuery.of(context).size.width;
 
     return Scaffold(
@@ -61,7 +65,7 @@ Widget logo(){
 Widget title(String title){
   return Container(
     margin: EdgeInsets.only(top: 25),
-    child: Text(title, style: _titleStyle,),
+    child: Text(title, style: titleStyle,),
   );
 }
 
