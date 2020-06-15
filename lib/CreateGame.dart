@@ -213,7 +213,7 @@ class _CreateGameState extends State<CreateGame> {
 
   Widget continueButton() {
     return Container(
-      margin: EdgeInsets.only(top: SizeConfig.safeBlockHorizontal),
+      margin: EdgeInsets.all(SizeConfig.safeBlockHorizontal),
       width: SizeConfig.safeBlockHorizontal * 80,
       height: 40,
       decoration: BoxDecoration(
@@ -228,7 +228,7 @@ class _CreateGameState extends State<CreateGame> {
         ),
         onPressed: () => {
           Navigator.of(context)
-              .push(MaterialPageRoute(builder: (context) => CreateGameUserSettings()))
+              .push(MaterialPageRoute(builder: (context) => CreateGameUserSettings(_listCounts)))
         },
       ),
     );

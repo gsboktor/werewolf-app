@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:werewolfapp/GameLobby.dart';
 import 'package:werewolfapp/constants.dart';
 
 import 'SizeConfig.dart';
@@ -8,6 +9,10 @@ typedef void IntCallback(int val);
 typedef void StringCallback(String str);
 
 class CreateGameUserSettings extends StatefulWidget {
+  Map<String, int> _roleList; //Percolates to the next widget/
+
+  CreateGameUserSettings(this._roleList);
+
   @override
   _CreateGameUserSettingsState createState() => _CreateGameUserSettingsState();
 }
@@ -17,6 +22,48 @@ class _CreateGameUserSettingsState extends State<CreateGameUserSettings> {
   int accuseDuration = 1;
   int defenseDuration = 1;
   String _userName = "";
+  String _lobbyName = "";
+
+  Widget startGameButton(BuildContext context) {
+    return Container(
+      margin: EdgeInsets.only(top: SizeConfig.safeBlockHorizontal * 17),
+      width: SizeConfig.safeBlockHorizontal * 80,
+      height: 40,
+      decoration: BoxDecoration(
+        color: Colors.lightBlueAccent,
+        borderRadius: BorderRadius.circular(12.0),
+      ),
+      child: FlatButton(
+        child: Text(
+          'Continue',
+          style: TextStyle(color: Colors.white),
+        ),
+        onPressed: () => {
+          if (_userName != "" && _lobbyName != "")
+            {
+              Navigator.of(context).push(MaterialPageRoute(
+                  builder: (context) =>
+                      GameLobby(widget._roleList, _lobbyName, _userName)))
+            }
+          else
+            {
+              Scaffold.of(context).showSnackBar(SnackBar(
+                content: Text(
+                  'Fill in all text fields.',
+                ),
+                action: SnackBarAction(
+                  label: 'Dismiss',
+                  textColor: Colors.lightBlueAccent,
+                  onPressed: () {
+                    Scaffold.of(context).hideCurrentSnackBar();
+                  },
+                ),
+              ))
+            }
+        },
+      ),
+    );
+  }
 
   Widget roleDivider(String title, String alertTitle, String alertBody) {
     return Container(
@@ -80,33 +127,48 @@ class _CreateGameUserSettingsState extends State<CreateGameUserSettings> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(
-        children: <Widget>[
-          titleBar(),
-          roleDivider("Daytime play duration", "Daytime Duration help",
-              "The amount of time allocated for deliberation during the day. Once time is up, accusations may begin."),
-          Timer(
-            (val) => {dayDuration = val},
-            (val) => {dayDuration = val},
-            dayDuration,
+      body: Builder(builder: (BuildContext innerContext) {
+        return SingleChildScrollView(
+          child: Column(
+            children: <Widget>[
+              titleBar(),
+              roleDivider("Daytime play duration", "Daytime Duration help",
+                  "The amount of time allocated for deliberation during the day. Once time is up, accusations may begin."),
+              Timer(
+                (val) => {dayDuration = val},
+                (val) => {dayDuration = val},
+                dayDuration,
+              ),
+              roleDivider("Accusation Duration", "Accusation Duration Help",
+                  "The amount of time allocated for the accuser to state their case."),
+              Timer(
+                (val) => {accuseDuration = val},
+                (val) => {accuseDuration = val},
+                accuseDuration,
+              ),
+              roleDivider("Defense Duration", "Defense Duration Help",
+                  "The amount of time allocated for the accused to state their case."),
+              Timer(
+                (val) => {defenseDuration = val},
+                (val) => {defenseDuration = val},
+                defenseDuration,
+              ),
+              EntryBox(
+                  (str) => {_userName = str},
+                  "Enter a Username",
+                  EdgeInsets.only(top: SizeConfig.safeBlockVertical * 15),
+                  Icons.person),
+              EntryBox(
+                (str) => {_lobbyName = str},
+                "Enter a Lobby Name",
+                EdgeInsets.only(top: SizeConfig.safeBlockVertical * 2),
+                Icons.assignment,
+              ),
+              startGameButton(innerContext),
+            ],
           ),
-          roleDivider("Accusation Duration", "Accusation Duration Help",
-              "The amount of time allocated for the accuser to state their case."),
-          Timer(
-            (val) => {accuseDuration = val},
-            (val) => {accuseDuration = val},
-            accuseDuration,
-          ),
-          roleDivider("Defense Duration", "Defense Duration Help",
-              "The amount of time allocated for the accused to state their case."),
-          Timer(
-            (val) => {defenseDuration = val},
-            (val) => {defenseDuration = val},
-            defenseDuration,
-          ),
-          EntryBox((str) => {_userName = str}, "Enter a Username", EdgeInsets.only(top: SizeConfig.safeBlockVertical * 5)),
-        ],
-      ),
+        );
+      }),
     );
   }
 }
@@ -166,37 +228,72 @@ class _TimerState extends State<Timer> {
   }
 }
 
-class EntryBox extends StatelessWidget {
+class EntryBox extends StatefulWidget {
   StringCallback _onChange;
   String _hint;
   EdgeInsets _margins;
+  IconData _icon;
+  bool _select = false;
 
-  EntryBox(this._onChange, this._hint, this._margins);
+  EntryBox(this._onChange, this._hint, this._margins, this._icon);
 
+  @override
+  _EntryBoxState createState() => _EntryBoxState();
+}
+
+class _EntryBoxState extends State<EntryBox> {
   @override
   Widget build(BuildContext context) {
     return Container(
-        margin: _margins,
-        width: SizeConfig.safeBlockHorizontal * 60,
-        height: SizeConfig.safeBlockVertical * 4,
-        decoration: BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.circular(12.0),
-            border: Border.all(color: Colors.grey),
-            shape: BoxShape.rectangle,
-        ),
-        child: TextField(
-          onChanged: (str){_onChange(str);},
-          decoration: InputDecoration(
-            border: InputBorder.none,
-            focusedBorder: InputBorder.none,
-            enabledBorder: InputBorder.none,
-            errorBorder: InputBorder.none,
-            disabledBorder: InputBorder.none,
-            contentPadding:
-                EdgeInsets.only(left: 15, bottom: 11, top: 11, right: 15),
-            hintText: _hint,
+      margin: widget._margins,
+      child:
+          Row(mainAxisAlignment: MainAxisAlignment.center, children: <Widget>[
+        Padding(
+          padding: EdgeInsets.only(right: SizeConfig.safeBlockHorizontal * 3),
+          child: Transform.scale(
+            scale: widget._select ? 1.4 : 1.0,
+            child: Icon(
+              widget._icon,
+              color: widget._select ? Colors.lightBlueAccent : Colors.black,
+            ),
           ),
-        ));
+        ),
+        Container(
+            width: SizeConfig.safeBlockHorizontal * 60,
+            height: SizeConfig.safeBlockVertical * 6,
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(12.0),
+              border: Border.all(color: Colors.grey),
+              shape: BoxShape.rectangle,
+            ),
+            child: TextField(
+              onTap: () {
+                setState(() {
+                  widget._select = true;
+                });
+              },
+              onChanged: (str) {
+                widget._onChange(str);
+              },
+              onEditingComplete: () {
+                FocusScope.of(context).unfocus();
+                setState(() {
+                  widget._select = false;
+                });
+              },
+              decoration: InputDecoration(
+                border: InputBorder.none,
+                focusedBorder: InputBorder.none,
+                enabledBorder: InputBorder.none,
+                errorBorder: InputBorder.none,
+                disabledBorder: InputBorder.none,
+                contentPadding:
+                    EdgeInsets.only(left: 15, bottom: 11, top: 11, right: 15),
+                hintText: widget._hint,
+              ),
+            )),
+      ]),
+    );
   }
 }
