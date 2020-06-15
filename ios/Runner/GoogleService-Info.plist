@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>185594963093-n80p1un7q70cl6hucqbmja8spltdpl47.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.185594963093-n80p1un7q70cl6hucqbmja8spltdpl47</string>
+	<key>ANDROID_CLIENT_ID</key>
+	<string>185594963093-smth2snq833u0atvkaaqed19tmc9sjom.apps.googleusercontent.com</string>
+	<key>API_KEY</key>
+	<string>AIzaSyBXSJlmiTohRcv-lQskCBqwG41YnJvwv24</string>
+	<key>GCM_SENDER_ID</key>
+	<string>185594963093</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.example.werewolfapp</string>
+	<key>PROJECT_ID</key>
+	<string>werewolf-b08ac</string>
+	<key>STORAGE_BUCKET</key>
+	<string>werewolf-b08ac.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:185594963093:ios:1c3294795d43b8c07d279c</string>
+	<key>DATABASE_URL</key>
+	<string>https://werewolf-b08ac.firebaseio.com</string>
+</dict>
+</plist>
