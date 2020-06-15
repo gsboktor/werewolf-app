@@ -16,6 +16,7 @@ class CreateGame extends StatefulWidget {
 }
 
 class _CreateGameState extends State<CreateGame> {
+
   int _index = 0;
   int _toAddIndex = 0;
 

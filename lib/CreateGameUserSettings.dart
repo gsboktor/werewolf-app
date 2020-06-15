@@ -5,6 +5,7 @@ import 'package:werewolfapp/constants.dart';
 import 'SizeConfig.dart';
 
 typedef void IntCallback(int val);
+typedef void StringCallback(String str);
 
 class CreateGameUserSettings extends StatefulWidget {
   @override
@@ -15,6 +16,7 @@ class _CreateGameUserSettingsState extends State<CreateGameUserSettings> {
   int dayDuration = 2;
   int accuseDuration = 1;
   int defenseDuration = 1;
+  String _userName = "";
 
   Widget roleDivider(String title, String alertTitle, String alertBody) {
     return Container(
@@ -102,13 +104,12 @@ class _CreateGameUserSettingsState extends State<CreateGameUserSettings> {
             (val) => {defenseDuration = val},
             defenseDuration,
           ),
+          EntryBox((str) => {_userName = str}, "Enter a Username", EdgeInsets.only(top: SizeConfig.safeBlockVertical * 5)),
         ],
       ),
     );
   }
 }
-
-
 
 class Timer extends StatefulWidget {
   IntCallback updatePlus;
@@ -162,5 +163,40 @@ class _TimerState extends State<Timer> {
         ],
       ),
     );
+  }
+}
+
+class EntryBox extends StatelessWidget {
+  StringCallback _onChange;
+  String _hint;
+  EdgeInsets _margins;
+
+  EntryBox(this._onChange, this._hint, this._margins);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+        margin: _margins,
+        width: SizeConfig.safeBlockHorizontal * 60,
+        height: SizeConfig.safeBlockVertical * 4,
+        decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(12.0),
+            border: Border.all(color: Colors.grey),
+            shape: BoxShape.rectangle,
+        ),
+        child: TextField(
+          onChanged: (str){_onChange(str);},
+          decoration: InputDecoration(
+            border: InputBorder.none,
+            focusedBorder: InputBorder.none,
+            enabledBorder: InputBorder.none,
+            errorBorder: InputBorder.none,
+            disabledBorder: InputBorder.none,
+            contentPadding:
+                EdgeInsets.only(left: 15, bottom: 11, top: 11, right: 15),
+            hintText: _hint,
+          ),
+        ));
   }
 }
