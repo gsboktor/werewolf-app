@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:werewolfapp/joinGame.dart';
 
-const _titleStyle = TextStyle(color: Colors. black, fontSize: 28, letterSpacing: 2.0, fontWeight: FontWeight.w600);
+const _titleStyle = TextStyle(color: Colors. black, fontSize: 45, letterSpacing: 2.0, fontWeight: FontWeight.w600);
 
 void main() => runApp(MyApp());
 
@@ -33,7 +34,7 @@ class _HomeScreenState extends State<HomeScreen>{
           children: <Widget>[
             logo(),
             title("Werewolf"),
-            buttons(width),
+            buttons(width, context),
           ],
         ),
       )
@@ -63,19 +64,20 @@ Widget title(String title){
   );
 }
 
-Widget buttons(double width){
+Widget buttons(double width, BuildContext context){
   return Column(
     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
     children: <Widget>[
       createGame(width),
-      joinGame(width),
+      SizedBox(height: 20.0),
+      joinGame(width, context),
     ],
   );
 }
 
 Widget createGame(double width){
   return Container(
-    margin: EdgeInsets.only(top: 200),
+    margin: EdgeInsets.only(top: 100),
     width: width * .65,
     height: 40,
     decoration: BoxDecoration(
@@ -84,15 +86,17 @@ Widget createGame(double width){
       boxShadow: [BoxShadow(blurRadius: 2.0, spreadRadius: 2.0, offset: Offset(0.0, 3.0), color: Colors.grey.withOpacity(.5))]
     ),
     child: FlatButton(
-      child: Text('Create Game'),
-      onPressed: () => {
-        print('Tap')
+      child: Text(
+          'Create Game',
+      ),
+      onPressed: () {
+        print('Tap');
       },
     ),
   );
 }
 
-Widget joinGame(double width){
+Widget joinGame(double width, BuildContext context){
   return Container(
     margin: EdgeInsets.only(top: 10),
     width: width * .65,
@@ -104,8 +108,8 @@ Widget joinGame(double width){
     ),
     child: FlatButton(
       child: Text('Join Game'),
-      onPressed: () => {
-        print('Tap')
+      onPressed: () {
+        Navigator.push(context, MaterialPageRoute(builder: (BuildContext context) => JoinGame()));
       },
     ),
   );
