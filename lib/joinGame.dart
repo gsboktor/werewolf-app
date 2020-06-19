@@ -28,6 +28,24 @@ class _JoinGameState extends State<JoinGame> {
   }
 }
 
+Widget titleBar(BuildContext context) {
+  return SafeArea(
+    child: Container(
+      child: Row(
+        children: <Widget>[
+          IconButton(
+            icon: Icon(Icons.arrow_back_ios),
+            onPressed: () {Navigator.pop(context);},
+          ),
+          Text(
+            'Game Settings',
+          )
+        ],
+      ),
+    ),
+  );
+}
+
 Widget enterCode(double width, BuildContext context){
   return Container(
     margin: EdgeInsets.only(top: 10),
