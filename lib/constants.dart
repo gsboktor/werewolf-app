@@ -42,6 +42,12 @@ const TextStyle headerStyle = TextStyle(
     fontWeight: FontWeight.w600,
     letterSpacing: 2.0);
 
+const TextStyle playerListStyle = TextStyle(
+  color: Colors.black,
+  fontSize: 20,
+  fontWeight: FontWeight.w400,
+);
+
 const TextStyle subHeaderStyle = TextStyle(
   color: Colors.black,
   fontSize: 18,

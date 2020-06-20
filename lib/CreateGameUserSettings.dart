@@ -18,6 +18,18 @@ class CreateGameUserSettings extends StatefulWidget {
 }
 
 class _CreateGameUserSettingsState extends State<CreateGameUserSettings> {
+
+  Map<String, int> createTimeMap(){
+
+    Map<String, int> temp = {
+      'Daytime duration': dayDuration,
+      'Accuse duration': accuseDuration,
+      'Defense duration': defenseDuration,
+    };
+
+    return temp;
+  }
+
   int dayDuration = 2;
   int accuseDuration = 1;
   int defenseDuration = 1;
@@ -43,7 +55,8 @@ class _CreateGameUserSettingsState extends State<CreateGameUserSettings> {
             {
               Navigator.of(context).push(MaterialPageRoute(
                   builder: (context) =>
-                      GameLobby(widget._roleList, _lobbyName, _userName)))
+
+                      GameLobby(widget._roleList, _lobbyName, _userName, createTimeMap())))
             }
           else
             {
@@ -268,6 +281,7 @@ class _EntryBoxState extends State<EntryBox> {
               shape: BoxShape.rectangle,
             ),
             child: TextField(
+              maxLength: 10,
               onTap: () {
                 setState(() {
                   widget._select = true;
@@ -288,6 +302,7 @@ class _EntryBoxState extends State<EntryBox> {
                 enabledBorder: InputBorder.none,
                 errorBorder: InputBorder.none,
                 disabledBorder: InputBorder.none,
+                counterText: "",
                 contentPadding:
                     EdgeInsets.only(left: 15, bottom: 11, top: 11, right: 15),
                 hintText: widget._hint,

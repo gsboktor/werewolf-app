@@ -244,7 +244,6 @@ class _CreateGameState extends State<CreateGame> {
           roleDivider("Pick Possible Game Roles", 'Pick Role Help',
               'Clicking a role card will add it to the list of possible roles when the game begins.'),
           roleCards(),
-//          roleDescrips(),
           roleDivider("Current Active Roles", "Current Roles Help",
               "This list displays all the viable roles once you start the game. You must have enough players to satisfy these roles."),
           roleList(),
