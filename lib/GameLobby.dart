@@ -21,6 +21,29 @@ class GameLobby extends StatefulWidget {
 }
 
 class _GameLobbyState extends State<GameLobby> {
+
+  Widget continueButton() {
+    return Container(
+      margin: EdgeInsets.all(SizeConfig.safeBlockHorizontal),
+      width: SizeConfig.safeBlockHorizontal * 80,
+      height: 40,
+      decoration: BoxDecoration(
+        color: Colors.lightBlueAccent,
+        borderRadius: BorderRadius.circular(12.0),
+//          boxShadow: [BoxShadow(blurRadius: 1.0, spreadRadius: 1.0, offset: Offset(0.0, 3.0), color: Colors.grey.withOpacity(0.5))]
+      ),
+      child: FlatButton(
+        child: Text(
+          'Start Game',
+          style: TextStyle(color: Colors.white),
+        ),
+        onPressed: () => {
+          print("Tap"),
+        },
+      ),
+    );
+  }
+
   Widget roleDivider(String title, String alertTitle, String alertBody) {
     return Container(
       margin: EdgeInsets.fromLTRB(50, 10, 0, 0),
@@ -110,7 +133,7 @@ class _GameLobbyState extends State<GameLobby> {
     return Container(
       margin: EdgeInsets.only(top: SizeConfig.safeBlockVertical * 2.5),
       width: SizeConfig.safeBlockHorizontal * 60,
-      height: SizeConfig.safeBlockVertical * 25,
+      height: SizeConfig.safeBlockVertical * 24,
       child: MediaQuery.removePadding(
         context: context,
         removeTop: true,
@@ -174,23 +197,24 @@ class _GameLobbyState extends State<GameLobby> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(
-        child: Column(
-          children: <Widget>[
-            titleBar(),
-            roleDivider("Current Players", "Current Players Help",
-                "The players currently in your lobby will be assigned a role when the game starts. You need enough players to satisfy all roles."),
-            PlayerList(widget._roleCount, widget._hostUsername,
-                EdgeInsets.only(top: SizeConfig.safeBlockVertical * 3)),
-            Padding(
-              padding: EdgeInsets.only(top: SizeConfig.safeBlockVertical * 2),
-              child: roleDivider("Details", "Details Help",
-                  "All current options selected for this game instance. You may change these settings by going back and adjusting values."),
+        body: Center(
+            child: Column(
+              children: <Widget>[
+                titleBar(),
+                roleDivider("Current Players", "Current Players Help",
+                    "The players currently in your lobby will be assigned a role when the game starts. You need enough players to satisfy all roles."),
+                PlayerList(widget._roleCount, widget._hostUsername,
+                    EdgeInsets.only(top: SizeConfig.safeBlockVertical * 3)),
+                Padding(
+                  padding: EdgeInsets.only(top: SizeConfig.safeBlockVertical * 2),
+                  child: roleDivider("Details", "Details Help",
+                      "All current options selected for this game instance. You may change these settings by going back and adjusting values."),
+                ),
+                details(),
+                continueButton(),
+              ],
             ),
-            details(),
-          ],
-        ),
-      ),
+          ),
     );
   }
 }
