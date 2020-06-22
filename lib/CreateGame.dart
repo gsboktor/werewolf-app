@@ -4,7 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:werewolfapp/CreateGameUserSettings.dart';
 import 'package:werewolfapp/main.dart';
-import 'package:werewolfapp/role.dart';
+import 'package:werewolfapp/models/Role.dart';
 
 import 'SizeConfig.dart';
 import 'constants.dart';

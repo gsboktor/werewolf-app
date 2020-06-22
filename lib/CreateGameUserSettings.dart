@@ -1,12 +1,15 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:random_string/random_string.dart';
 import 'package:werewolfapp/GameLobby.dart';
 import 'package:werewolfapp/constants.dart';
+import 'package:werewolfapp/services/auth.dart';
 
 import 'SizeConfig.dart';
 
 typedef void IntCallback(int val);
 typedef void StringCallback(String str);
+final AuthService _auth = AuthService();
 
 class CreateGameUserSettings extends StatefulWidget {
   Map<String, int> _roleList; //Percolates to the next widget/
@@ -18,6 +21,8 @@ class CreateGameUserSettings extends StatefulWidget {
 }
 
 class _CreateGameUserSettingsState extends State<CreateGameUserSettings> {
+
+
 
   Map<String, int> createTimeMap(){
 
@@ -35,6 +40,23 @@ class _CreateGameUserSettingsState extends State<CreateGameUserSettings> {
   int defenseDuration = 1;
   String _userName = "";
   String _lobbyName = "";
+  String gameString;
+  dynamic result;
+
+  ScaffoldFeatureController snackBar(String msg, BuildContext context){
+    return Scaffold.of(context).showSnackBar(SnackBar(
+      content: Text(
+        msg,
+      ),
+      action: SnackBarAction(
+        label: 'Dismiss',
+        textColor: Colors.lightBlueAccent,
+        onPressed: () {
+          Scaffold.of(context).hideCurrentSnackBar();
+        },
+      ),
+    ));
+  }
 
   Widget startGameButton(BuildContext context) {
     return Container(
@@ -53,25 +75,22 @@ class _CreateGameUserSettingsState extends State<CreateGameUserSettings> {
         onPressed: () => {
           if (_userName != "" && _lobbyName != "")
             {
-              Navigator.of(context).push(MaterialPageRoute(
-                  builder: (context) =>
+              gameString = randomAlphaNumeric(6),
+              print(gameString),
+              result = _auth.signInAnonHost(_userName, gameString),
+              if(result != null){
+                Navigator.of(context).push(MaterialPageRoute(
+                    builder: (context) =>
 
-                      GameLobby(widget._roleList, _lobbyName, _userName, createTimeMap())))
+                        GameLobby(widget._roleList, _lobbyName, _userName,
+                            createTimeMap())))
+              }else{
+                snackBar('Error creating user. Please Try again.', context)
+              }
             }
           else
             {
-              Scaffold.of(context).showSnackBar(SnackBar(
-                content: Text(
-                  'Fill in all text fields.',
-                ),
-                action: SnackBarAction(
-                  label: 'Dismiss',
-                  textColor: Colors.lightBlueAccent,
-                  onPressed: () {
-                    Scaffold.of(context).hideCurrentSnackBar();
-                  },
-                ),
-              ))
+              snackBar('Fill in all textFields', context)
             }
         },
       ),
@@ -214,6 +233,7 @@ class _TimerState extends State<Timer> {
                       : Colors.grey),
               onPressed: () => widget._currTime > 1
                   ? {
+                      _auth.signOut(),
                       setState(() => widget._currTime -= 1),
                       widget.updateMinus(widget._currTime),
                     }

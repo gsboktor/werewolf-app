@@ -1,6 +1,6 @@
 
 import 'package:flutter/material.dart';
-import 'package:werewolfapp/role.dart';
+import 'package:werewolfapp/models/Role.dart';
 
 
 List<Role> roles = [
