@@ -7,7 +7,7 @@ const functions = require('firebase-functions');
 const db = admin.firestore();
 
 // Sets the roles for each player for each game ID
-function setRoles(gameID){
+function setRolesHelper(gameID){
 
     // Set reference to doc with game ID
     const docRef = db.collection(gameID).doc('playerRoles');
@@ -44,11 +44,11 @@ function setRoles(gameID){
 }
 
 // Cloud function to set the roles of each game ID
-exports.seeChanges = functions.firestore.document('{gameID}/gameRules').onUpdate((change, context) => {
+exports.setRoles = functions.firestore.document('{gameID}/gameRules').onUpdate((change, context) => {
 
     // Make sure it's time to set the roles and set them
     const body = change.after.data()
     if (body['setRoles'] == true){
-        setRoles(context.params.gameID)
+        setRolesHelper(context.params.gameID)
     }
 })
